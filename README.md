@@ -182,3 +182,26 @@ Intégrer un site de suivi de statistiques de jeu avec un forum de discussion po
 - `git commit -m "Initial commit"` : Crée un commit avec un message décrivant ce commit.
 - `git remote add origin https://github.com/SamymaS/ProjetStatsGames.git` : Ajoute le remote appelé origin pointant vers votre repository GitHub.
 - `git push -u origin main` : Pousse les commits locaux vers la branche main sur le remote origin et définit main comme la branche par défaut pour les futures opérations de push et pull.
+
+### Etape par étape
+
+- Tirer les changements de la branche main distante avec rebase :
+
+`git pull origin main --rebase`
+
+> - Résoudre les conflits (si nécessaire) :
+
+Résoudre les conflits manuellement, ajouter les fichiers résolus et continuer le rebase :
+
+`git add .`
+`git rebase --continue`
+
+Pousser la branche main mise à jour :
+
+`git push -u origin main`
+
+### Explications
+
+> - `git pull origin main --rebase`: Cette commande tire les changements de la branche main distante et repositionne vos commits locaux au sommet des commits récupérés.
+> - `Résoudre les conflits` : Si des conflits se produisent pendant le rebase, vous devrez les résoudre manuellement, ajouter les fichiers modifiés (git add .) et continuer le rebase (git rebase --continue).
+> - `git push -u origin main` : Une fois que votre branche locale est à jour et sans conflits, cette commande pousse vos modifications vers le dépôt distant.

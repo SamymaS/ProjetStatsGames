@@ -177,8 +177,8 @@ Intégrer un site de suivi de statistiques de jeu avec un forum de discussion po
 
 ### Git 
 
-- **git init** : Initialise un nouveau repository Git local.
-- **git add** . : Ajoute tous les fichiers et dossiers du projet au suivi de Git.
-- **git commit -m "Initial commit"** : Crée un commit avec un message décrivant ce commit.
-- **git remote add origin** https://github.com/SamymaS/ProjetStatsGames.git : Ajoute le remote appelé origin pointant vers votre repository GitHub.
-- **git push -u origin main**: Pousse les commits locaux vers la branche main sur le remote origin et définit main comme la branche par défaut pour les futures opérations de push et pull.
+- `git init` : Initialise un nouveau repository Git local.
+- `git add` . : Ajoute tous les fichiers et dossiers du projet au suivi de Git.
+- `git commit -m "Initial commit"` : Crée un commit avec un message décrivant ce commit.
+- `git remote add origin https://github.com/SamymaS/ProjetStatsGames.git` : Ajoute le remote appelé origin pointant vers votre repository GitHub.
+- `git push -u origin main` : Pousse les commits locaux vers la branche main sur le remote origin et définit main comme la branche par défaut pour les futures opérations de push et pull.

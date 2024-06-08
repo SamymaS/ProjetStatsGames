@@ -1,14 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Games</title>
-</head>
-<body>
-    <h1>Games List</h1>
-    <ul>
-        {% for game in games %}
-            <li>{{ game.name }} - Rating: {{ game.rating }}</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends "forum_app/base.html" %}
+
+{% block title %}Games{% endblock %}
+
+{% block content %}
+<h2>Games List</h2>
+<ul class="list-group">
+    {% for game in games %}
+    <li class="list-group-item">
+        <h5>{{ game.name }}</h5>
+        <p>Genres: {{ game.genres }}</p>
+        <p>Platforms: {{ game.platforms }}</p>
+        <p>Rating: {{ game.rating }}</p>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

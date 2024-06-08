@@ -7,10 +7,14 @@ from django.http import JsonResponse
 import urllib.parse
 import requests
 
-# Vues existantes
 class TopicListCreateView(generics.ListCreateAPIView):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
+
+    def list(self, request):
+        queryset = self.get_queryset()
+        context = {'topics': queryset}
+        return render(request, 'forum_app/topics.html', context)
 
 class TopicDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Topic.objects.all()
@@ -20,6 +24,11 @@ class PostListCreateView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
+    def list(self, request):
+        queryset = self.get_queryset()
+        context = {'posts': queryset}
+        return render(request, 'forum_app/posts.html', context)
+
 class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -28,17 +37,23 @@ class CommentListCreateView(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
+    def list(self, request):
+        queryset = self.get_queryset()
+        context = {'comments': queryset}
+        return render(request, 'forum_app/comments.html', context)
+
 class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
-# Vue pour gérer la réponse OAuth
+def home(request):
+    return render(request, 'forum_app/index.html')
+
 def oauth_callback(request):
     code = request.GET.get('code')
     if not code:
         return redirect('/')
 
-    # Échanger le code contre un jeton d'accès
     token_url = 'https://id.twitch.tv/oauth2/token'
     data = {
         'client_id': settings.IGDB_CLIENT_ID,
@@ -54,12 +69,9 @@ def oauth_callback(request):
     if not access_token:
         return redirect('/')
 
-    # Stocker le jeton d'accès dans la session (ou base de données)
     request.session['access_token'] = access_token
-
     return redirect('/games/')
 
-# Rediriger l'utilisateur vers l'URL d'autorisation
 def oauth_authorize(request):
     auth_url = 'https://id.twitch.tv/oauth2/authorize'
     params = {
@@ -71,7 +83,6 @@ def oauth_authorize(request):
     url = f"{auth_url}?{urllib.parse.urlencode(params)}"
     return redirect(url)
 
-# Vue pour récupérer les données de jeux depuis IGDB
 def get_games_from_igdb(request):
     access_token = request.session.get('access_token')
     if not access_token:
@@ -87,8 +98,5 @@ def get_games_from_igdb(request):
     games = response.json()
     return render(request, 'forum_app/games.html', {'games': games})
 
-# Vue pour l'index de l'API
 def api_index(request):
-    return JsonResponse({
-        'message': 'Bienvenue à l\'API de ProjetStatsGames. Utilisez les routes spécifiques pour accéder aux données.'
-    })
+    return render(request, 'forum_app/index.html')

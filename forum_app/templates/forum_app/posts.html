@@ -1,0 +1,15 @@
+{% extends "forum_app/base.html" %}
+
+{% block title %}Posts{% endblock %}
+
+{% block content %}
+<h2>Posts</h2>
+<ul class="list-group">
+    {% for post in posts %}
+    <li class="list-group-item">
+        <p>{{ post.content }}</p>
+        <small>By {{ post.author.username }} on {{ post.created_at }}</small>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

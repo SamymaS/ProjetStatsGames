@@ -11,5 +11,5 @@ urlpatterns = [
     path('posts/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('comments/', CommentListCreateView.as_view(), name='comment-list'),
     path('comments/<int:pk>/', CommentDetailView.as_view(), name='comment-detail'),
-    path('', api_index, name='api_index'),  # Ajoutez cette ligne pour l'index de l'API
+    path('', api_index, name='api_index'),
 ]

@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from rest_framework import generics
 from .models import Topic, Post, Comment
 from .serializers import TopicSerializer, PostSerializer, CommentSerializer
@@ -6,6 +7,10 @@ from django.conf import settings
 from django.http import JsonResponse
 import urllib.parse
 import requests
+
+# Simple View
+def simple_view(request):
+    return HttpResponse("Simple View Working!")
 
 class TopicListCreateView(generics.ListCreateAPIView):
     queryset = Topic.objects.all()

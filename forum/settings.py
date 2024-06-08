@@ -1,10 +1,10 @@
-# forum/settings.py
-
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
-# Charger les variables d'environnement à partir du fichier .env
-load_dotenv()
+# Chemin vers le fichier .env
+env_path = Path('.') / '.env'
+load_dotenv(dotenv_path=env_path)
 
 # Obtenir les variables d'environnement
 IGDB_CLIENT_ID = os.getenv('IGDB_CLIENT_ID')

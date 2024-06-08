@@ -1,13 +1,12 @@
-# from django.shortcuts import render
-
-# Create your views here.
-
-
 from rest_framework import generics
 from .models import Topic, Post, Comment
 from .serializers import TopicSerializer, PostSerializer, CommentSerializer
+from django.shortcuts import render, redirect
+from django.conf import settings
+import urllib.parse
+import requests
 
-
+# Vues existantes
 class TopicListCreateView(generics.ListCreateAPIView):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
@@ -32,26 +31,20 @@ class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
-# Vue pour Gérer la Réponse OAuth 
-# Cette vue recevra un code de l'API qui sera utilisé pour obtenir un jeton d'accès.
-
-import requests
-from django.conf import settings
-from django.shortcuts import redirect
-
+# Vue pour gérer la réponse OAuth
 def oauth_callback(request):
     code = request.GET.get('code')
     if not code:
         return redirect('/')
 
     # Échanger le code contre un jeton d'accès
-    token_url = 'https://api.igdb.com/v4/token'
+    token_url = 'https://id.twitch.tv/oauth2/token'
     data = {
         'client_id': settings.IGDB_CLIENT_ID,
         'client_secret': settings.IGDB_CLIENT_SECRET,
-        'grant_type': 'authorization_code',
         'code': code,
-        'redirect_uri': 'http://localhost:8000/oauth/callback/'
+        'grant_type': 'authorization_code',
+        'redirect_uri': settings.IGDB_REDIRECT_URI
     }
     response = requests.post(token_url, data=data)
     response_data = response.json()
@@ -63,20 +56,32 @@ def oauth_callback(request):
     # Stocker le jeton d'accès dans la session (ou base de données)
     request.session['access_token'] = access_token
 
-    return redirect('/')
+    return redirect('/games/')
 
-
-
-# Redirige l'utilisateur vers l'URL d'autorisation 
-
+# Rediriger l'utilisateur vers l'URL d'autorisation
 def oauth_authorize(request):
-    auth_url = 'https://api.igdb.com/v4/authorize'
+    auth_url = 'https://id.twitch.tv/oauth2/authorize'
     params = {
         'client_id': settings.IGDB_CLIENT_ID,
-        'redirect_uri': 'http://localhost:8000/oauth/callback/',
+        'redirect_uri': settings.IGDB_REDIRECT_URI,
         'response_type': 'code',
-        'scope': 'user_info'
+        'scope': 'user:read:email'
     }
     url = f"{auth_url}?{urllib.parse.urlencode(params)}"
     return redirect(url)
 
+# Vue pour récupérer les données de jeux depuis IGDB
+def get_games_from_igdb(request):
+    access_token = request.session.get('access_token')
+    if not access_token:
+        return redirect('/oauth/authorize/')
+
+    url = 'https://api.igdb.com/v4/games'
+    headers = {
+        'Client-ID': settings.IGDB_CLIENT_ID,
+        'Authorization': f'Bearer {access_token}',
+    }
+    data = 'fields name, genres, platforms, rating; limit 10;'
+    response = requests.post(url, headers=headers, data=data)
+    games = response.json()
+    return render(request, 'forum_app/games.html', {'games': games})

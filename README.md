@@ -170,6 +170,7 @@ Intégrer un site de suivi de statistiques de jeu avec un forum de discussion po
  /api
 
 
+ Lancer les tests : `python manage.py test`
  Activer les variables d'environnement : `.\venv\Scripts\activate`
  Démarer le serveur django : `cmd venv\forum python manage.py runserver`
 

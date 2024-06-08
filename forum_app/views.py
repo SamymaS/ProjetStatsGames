@@ -3,6 +3,7 @@ from .models import Topic, Post, Comment
 from .serializers import TopicSerializer, PostSerializer, CommentSerializer
 from django.shortcuts import render, redirect
 from django.conf import settings
+from django.http import JsonResponse
 import urllib.parse
 import requests
 
@@ -85,3 +86,9 @@ def get_games_from_igdb(request):
     response = requests.post(url, headers=headers, data=data)
     games = response.json()
     return render(request, 'forum_app/games.html', {'games': games})
+
+# Vue pour l'index de l'API
+def api_index(request):
+    return JsonResponse({
+        'message': 'Bienvenue à l\'API de ProjetStatsGames. Utilisez les routes spécifiques pour accéder aux données.'
+    })

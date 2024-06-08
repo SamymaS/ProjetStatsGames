@@ -131,3 +131,60 @@ Résumé des Étapes :
 Configurer les routes d'authentification JWT dans le fichier urls.py du projet principal (forum/urls.py).
 Inclure les routes de l'application forum_app dans forum/urls.py.
 Définir les routes spécifiques à l'application dans le fichier forum_app/urls.py
+
+
+https://dev.twitch.tv/console/apps/16c99xmtcoavl4xqx6r6n0jdf6e4zc
+API :
+https://www.igdb.com/
+
+
+tests routes 
+
+http://localhost:8000/
+
+http://localhost:8000//admin/
+
+http://localhost:8000/api/
+http://localhost:8000/api/topics/
+http://localhost:8000/api/posts/
+http://localhost:8000/api/comments/
+
+http://localhost:8000/oauth/authorize/
+http://localhost:8000/oauth/callback/
+
+http://localhost:8000/games/
+
+Étape 1 : Vérifiez et Appliquez les Migrations
+
+Créez les Migrations
+Assurez-vous que Django crée les migrations nécessaires pour vos modèles en exécutant la commande suivante :
+
+code:
+python manage.py makemigrations
+Appliquez les Migrations
+Appliquez les migrations pour créer les tables dans votre base de données :
+
+code:
+python manage.py migrate
+
+Étape 2 : Redémarrez le Serveur Django
+Après avoir appliqué les migrations, redémarrez votre serveur Django pour vous assurer que les modifications sont prises en compte :
+
+code:
+python manage.py runserver
+
+Vérifiez les Tables et Testez les Routes
+Une fois que les migrations sont appliquées et que le serveur est redémarré, essayez d'accéder à l'URL http://127.0.0.1:8000/api/topics/ pour vérifier que la table forum_app_topic a été correctement créée et que les données peuvent être récupérées.
+
+Exemple de Commandes Complètes
+Voici un résumé des commandes que vous devez exécuter :
+
+
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+
+Explication :
+makemigrations : Cette commande scanne vos modèles pour toute modification et crée des fichiers de migration correspondants.
+migrate : Cette commande applique les fichiers de migration à votre base de données, créant ainsi les tables définies dans vos modèles.
+runserver : Cette commande démarre le serveur de développement Django.

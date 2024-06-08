@@ -150,7 +150,7 @@ Intégrer un site de suivi de statistiques de jeu avec un forum de discussion po
     │    
     └── README.md
     └── ... 
-> Cette strucure risque d'évoluer au fur et à mesure que le projet avance (je ne fixe pas de deadline pour le moment)
+> Cette structure risque d'évoluer au fur et à mesure que le projet avance (je ne fixe pas de deadline pour le moment)
 
 ============================
 
@@ -165,18 +165,67 @@ Intégrer un site de suivi de statistiques de jeu avec un forum de discussion po
 
 ### Rappel
 
- adresse http://127.0.0.1:8000/
- /admin
- /api
+- **Lancer les tests** : `python manage.py test`
+- **Activer les variables d'environnement** : `.\venv\Scripts\activate`
+- **Démarer le serveur django** : `cmd venv\forum python manage.py runserver`
+
+- **Redémarrer le serveur Django** : (Ctrl+c) pour arrêter le processus dans l'invite de commandes puis `cmd venv\forum python manage.py runserver`
+
+- **SuperUser** : id `supersamyb` mdp `superadmin` (maj ?)
 
 
- Lancer les tests : `python manage.py test`
- Activer les variables d'environnement : `.\venv\Scripts\activate`
- Démarer le serveur django : `cmd venv\forum python manage.py runserver`
 
- Redémarrer le serveur Django : (Ctrl+c) pour arrêter le processus dans l'invite de commandes puis `cmd venv\forum python manage.py runserver`
+`https://dev.twitch.tv/console/apps/16c99xmtcoavl4xqx6r6n0jdf6e4zc`
+API :
+`https://www.igdb.com/`
 
- SuperUser : id `supersamyb` mdp `superadmin` (maj ?)
+
+tests routes 
+>- `http://localhost:8000/`
+>
+>- `http://localhost:8000//admin/`
+>
+>- `http://localhost:8000/api/`
+>- `http://localhost:8000/api/topics/`
+>- `http://localhost:8000/api/posts/`
+>- `http://localhost:8000/api/comments/`
+>
+>- `http://localhost:8000/oauth/authorize/`
+>- `http://localhost:8000/oauth/callback/`
+>
+>- `http://localhost:8000/games/`
+
+### Étape 1 : Vérifiez et Appliquez les Migrations
+
+Créez les Migrations
+Django créer les migrations nécessaires pour vos modèles en exécutant la commande suivante :
+
+code: `python manage.py makemigrations`
+
+Appliquez les migrations pour créer les tables dans votre base de données :
+code: `python manage.py migrate`
+
+### Étape 2 : Redémarrez le Serveur Django
+Après avoir appliqué les migrations, redémarrez votre serveur Django pour vous assurer que les modifications sont prises en compte :
+
+code: `python manage.py runserver`
+
+Vérifiez les Tables et Testez les Routes
+Une fois que les migrations sont appliquées et que le serveur est redémarré, essayez d'accéder à l'URL http://127.0.0.1:8000/api/topics/ pour vérifier que la table forum_app_topic a été correctement créée et que les données peuvent être récupérées.
+
+Exemple de Commandes Complètes
+Voici un résumé des commandes que vous devez exécuter :
+
+
+`python manage.py makemigrations`
+`python manage.py migrate`
+`python manage.py runserver`
+
+###Explication :
+`makemigrations` : Cette commande scanne vos modèles pour toute modification et crée des fichiers de migration correspondants.
+`migrate` : Cette commande applique les fichiers de migration à votre base de données, créant ainsi les tables définies dans vos modèles.
+`runserver` : Cette commande démarre le serveur de développement Django.
+
 
 ### Git 
 

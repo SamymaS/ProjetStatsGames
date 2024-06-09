@@ -1,3 +1,5 @@
+# forum_app/urls.py
+
 from django.urls import path
 from .views import oauth_authorize, oauth_callback, get_games_from_igdb, TopicListCreateView, TopicDetailView, PostListCreateView, PostDetailView, CommentListCreateView, CommentDetailView, api_index, simple_view
 
@@ -11,6 +13,6 @@ urlpatterns = [
     path('posts/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('comments/', CommentListCreateView.as_view(), name='comment-list'),
     path('comments/<int:pk>/', CommentDetailView.as_view(), name='comment-detail'),
-    path('simple/', simple_view, name='simple_view'),  # Ajouter cette ligne
+    path('simple/', simple_view, name='simple_view'),
     path('', api_index, name='api_index'),
 ]
